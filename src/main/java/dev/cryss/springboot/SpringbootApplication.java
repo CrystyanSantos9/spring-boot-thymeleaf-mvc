@@ -11,7 +11,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 //ComponentScan(basePackages={"dev.cryss.*"})
 //@EnableJpaRepositories(basePackages={"dev.cryss.springboot.repository"})
 //@EnableTransactionManagement
-public class SpringbootApplication {
+public class SpringbootApplication { 
 	public static void main(String[] args) {
 		SpringApplication.run(SpringbootApplication.class, args);
 	}

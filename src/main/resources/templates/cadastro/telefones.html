@@ -56,7 +56,7 @@ form input[type=submit] {
 		<form
 			th:action="@{/addfonePessoa/{idpessoa}(idpessoa=${pessoaobj.id})}"
 			method="post" class="col s12"
-			onsubmit="return validarCampos()? true : false" )>
+			onsubmit="return validarCampos()? true : false">
 			<div class="row">
 				<div class="input-field col s6">
 					<label class="active">Número:</label> <input id="numero"

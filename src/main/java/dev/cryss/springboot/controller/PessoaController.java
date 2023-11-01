@@ -43,20 +43,23 @@ public class PessoaController {
 	@RequestMapping(method = RequestMethod.POST, value = "**/salvarpessoa")
 	public ModelAndView salvar(@Valid Pessoa pessoa, BindingResult bindingResult) {
 
-		if (bindingResult.hasErrors()) {
-			ModelAndView andView = new ModelAndView("cadastro/cadastropessoa");
-			Iterable<Pessoa> pessoasIt = pessoaRepository.findAll();
-			andView.addObject("pessoaobj", pessoa);
-			andView.addObject("pessoas", pessoasIt);
+		pessoa.setTelefones(telefoneRepository.getTelefones(pessoa.getId()));
+	
+			if (bindingResult.hasErrors()) {
+				ModelAndView andView = new ModelAndView("cadastro/cadastropessoa");
+				Iterable<Pessoa> pessoasIt = pessoaRepository.findAll();
+				andView.addObject("pessoaobj", pessoa);
+				andView.addObject("pessoas", pessoasIt);
 
-			List<String> msg = new ArrayList<String>();
-			for (ObjectError objectError : bindingResult.getAllErrors()) {
-				msg.add(objectError.getDefaultMessage());
+				List<String> msg = new ArrayList<String>();
+				for (ObjectError objectError : bindingResult.getAllErrors()) {
+					msg.add(objectError.getDefaultMessage());
+				}
+
+				andView.addObject("msg", msg);
+				return andView;
 			}
-
-			andView.addObject("msg", msg);
-			return andView;
-		}
+	
 
 		pessoaRepository.save(pessoa);
 

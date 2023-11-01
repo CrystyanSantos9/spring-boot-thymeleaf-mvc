@@ -21,9 +21,21 @@ form input[type=submit] {
 
 </head>
 <body>
-	<h3>Spring Boot + Thymeleaf + Material Design Lite</h3>
-	<br />
-	<h5>Cadastro de pessoas</h5>
+
+	<div class="row">
+		<div class="input-field col s10">
+			<h3>Spring Boot + Thymeleaf + Material Design Lite</h3>
+			<br />
+			<h5>Cadastro de pessoas</h5>
+		</div>
+
+		<div class="input-field col s2">
+			<a href="/logout" class="waves-effect waves-light btn"
+				id="btnLogout">Logout</a>
+		</div>
+	</div>
+
+
 
 	<br>
 	<div th:each="m : ${msg}">
@@ -32,7 +44,9 @@ form input[type=submit] {
 	<br>
 
 
-	<form action="salvarpessoa" id="formpessoa" method="post"
+
+
+	<form th:action="salvarpessoa" id="formpessoa" method="post"
 		th:object="${pessoaobj}">
 
 		<div class="row">
@@ -50,14 +64,14 @@ form input[type=submit] {
 
 		<div class="row">
 
-			<div class="input-fiel col s12">
-				<label for="sobrenome" class="active">Sobrenome:</label> <input
-					name="sobrenome" th:field="*{sobrenome}" />
+			<div class="input-field col s12">
+				<label for="sobrenome" class="active">Sobrenome: </label> 
+				<input name="sobrenome" th:field="*{sobrenome}" />		
 			</div>
 
 			<div class="input-fiel col s12">
-				<label for="idade" class="active">Idade: </label> <input
-					name="idade" th:field="*{idade}" />
+				<label for="idade" class="active">Idade: </label> 
+				<input name="idade" th:field="*{idade}" />		
 			</div>
 		</div>
 
@@ -75,7 +89,7 @@ form input[type=submit] {
 
 
 	<div class="row">
-		<form action="pesquisarpessoa" method="post">
+		<form th:action="pesquisarpessoa" method="post">
 			<div class="row">
 				<div class="input-fiel col s12">
 					<label for="nomepesquisa" class="active">Pesquisar por
