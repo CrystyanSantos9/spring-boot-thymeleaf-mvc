@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -20,7 +22,7 @@ import dev.cryss.springboot.model.Pessoa;
 import dev.cryss.springboot.model.Telefone;
 import dev.cryss.springboot.repository.PessoaRepository;
 import dev.cryss.springboot.repository.TelefoneRepository;
-import jakarta.validation.Valid;
+
 
 @Controller
 public class PessoaController {
@@ -42,11 +44,13 @@ public class PessoaController {
 
 	@RequestMapping(method = RequestMethod.POST, value = "**/salvarpessoa")
 	public ModelAndView salvar(@Valid Pessoa pessoa, BindingResult bindingResult) {
+		
+		pessoa.setTelefones(telefoneRepository.getTelefones(pessoa.getId()));
 
 		if (bindingResult.hasErrors()) {
 			ModelAndView andView = new ModelAndView("cadastro/cadastropessoa");
 			Iterable<Pessoa> pessoasIt = pessoaRepository.findAll();
-			andView.addObject("pessoaobj", pessoa);
+			andView.addObject("pessoaobj", pessoa); 
 			andView.addObject("pessoas", pessoasIt);
 
 			List<String> msg = new ArrayList<String>();
