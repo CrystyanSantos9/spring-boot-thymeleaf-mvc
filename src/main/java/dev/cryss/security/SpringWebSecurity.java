@@ -1,5 +1,6 @@
 package dev.cryss.security;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -16,8 +17,17 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @Configuration
 public class SpringWebSecurity extends WebSecurityConfigurerAdapter {
 	
+	@Autowired
+	UserDetailsServiceImpl userDetailsService;
+	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
+		
+//		http.csrf().disable()
+//		.httpBasic() 
+//		.and()
+//		.authorizeHttpRequests()
+//		.anyRequest().authenticated();
 		http.csrf()
 		.disable()
 		.authorizeRequests()
@@ -32,10 +42,8 @@ public class SpringWebSecurity extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception
 		{
-		    auth.inMemoryAuthentication()
-		    .withUser("admin")
-		    .password(passwordEnconder().encode("123456"))
-		    .roles("ADMIN");
+		    auth.userDetailsService(userDetailsService)
+		    .passwordEncoder(passwordEnconder());
 		}
 	
 	 @Override
@@ -44,7 +52,7 @@ public class SpringWebSecurity extends WebSecurityConfigurerAdapter {
 	 }
 	 
 	 @Bean
-	 public PasswordEncoder passwordEnconder() {
+	 public PasswordEncoder passwordEnconder() { 
 		 return new BCryptPasswordEncoder();
 	 }
 	 
