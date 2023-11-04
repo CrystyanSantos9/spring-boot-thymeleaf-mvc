@@ -8,6 +8,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
@@ -34,6 +35,7 @@ public class PessoaController {
 	@Autowired
 	private TelefoneRepository telefoneRepository;
 
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
 	@RequestMapping(method = RequestMethod.GET, value = "/cadastropessoa")
 	public ModelAndView inicio() {
 		ModelAndView andView = new ModelAndView("cadastro/cadastropessoa");
@@ -43,6 +45,7 @@ public class PessoaController {
 		return andView;
 	}
 
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@RequestMapping(method = RequestMethod.POST, value = "**/salvarpessoa")
 	public ModelAndView salvar(@Valid Pessoa pessoa, BindingResult bindingResult) {
 		
@@ -72,6 +75,7 @@ public class PessoaController {
 		return andView;
 	}
 
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
 	@RequestMapping(method = RequestMethod.GET, value = "/listapessoas")
 	public ModelAndView pessoas() {
 		ModelAndView andView = new ModelAndView("cadastro/cadastropessoa");
@@ -81,6 +85,7 @@ public class PessoaController {
 		return andView;
 	}
 
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@GetMapping("/editar/{idpessoa}")
 	public ModelAndView editar(@PathVariable("idpessoa") Long idpessoa) {
 
@@ -93,6 +98,7 @@ public class PessoaController {
 		return andView;
 	}
 
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@GetMapping("/remover/{idpessoa}")
 	public ModelAndView excluir(@PathVariable("idpessoa") Long idpessoa) {
 
@@ -105,6 +111,7 @@ public class PessoaController {
 		return andView;
 	}
 
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
 	@PostMapping("**/pesquisarpessoa")
 	public ModelAndView pesquisar(@RequestParam("nomepesquisa") String nomepesquisa) {
 		ModelAndView andView = new ModelAndView("cadastro/cadastropessoa");
@@ -113,6 +120,7 @@ public class PessoaController {
 		return andView;
 	}
 
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
 	@GetMapping("/telefones/{idpessoa}")
 	public ModelAndView telefones(@PathVariable("idpessoa") Long idpessoa) {
 
@@ -125,6 +133,7 @@ public class PessoaController {
 		return andView;
 	}
 
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
 	@PostMapping("**/addfonePessoa/{idpessoa}")
 	public ModelAndView addFonePessoa(Telefone telefone, @PathVariable("idpessoa") Long idpessoa) {
 
@@ -162,6 +171,7 @@ public class PessoaController {
 		return andView;
 	}
 
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@GetMapping("/removertelefone/{idtelefone}")
 	public ModelAndView removerTelefone(@PathVariable("idtelefone") Long idtelefone) {
 
