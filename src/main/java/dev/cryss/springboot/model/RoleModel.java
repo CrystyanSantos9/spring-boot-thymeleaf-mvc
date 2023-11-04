@@ -5,6 +5,7 @@ import java.util.UUID;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -26,12 +27,10 @@ public class RoleModel implements GrantedAuthority, Serializable {
 	private UUID roleId;
 	
 	
-	@Enumerated
+	@Enumerated(EnumType.STRING)
 	@Column(nullable = false, unique = true)
 	private RoleName roleName;
 
-	
-	
 
 	@Override
 	public String getAuthority() {

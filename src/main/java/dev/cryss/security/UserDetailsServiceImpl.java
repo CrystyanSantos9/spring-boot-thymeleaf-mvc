@@ -1,5 +1,8 @@
 package dev.cryss.security;
 
+import javax.transaction.Transactional;
+
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -9,6 +12,7 @@ import dev.cryss.springboot.model.UserModel;
 import dev.cryss.springboot.repository.UserRepository;
 
 @Service
+@Transactional
 public class UserDetailsServiceImpl implements UserDetailsService {
 	
 	final UserRepository userRepository;
@@ -22,7 +26,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 		UserModel userModel = userRepository.findByUsername(username)
 				.orElseThrow(()-> new UsernameNotFoundException("User Not Found with username: " + username));
 		
-		return userModel;
+		return new User(userModel.getUsername(),userModel.getPassword(), true, true, true, true, userModel.getAuthorities() );
 		
 	}
 	
