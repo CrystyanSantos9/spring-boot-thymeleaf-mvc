@@ -1,6 +1,9 @@
 package dev.cryss.security;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -10,6 +13,7 @@ import dev.cryss.springboot.model.Usuario;
 import dev.cryss.springboot.repository.UsuarioRepository;
 
 @Service
+@Transactional
 public class UserDetailsServiceImpl implements UserDetailsService {
 
 	@Autowired
@@ -23,7 +27,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 			throw new UsernameNotFoundException("User not found");
 		}
 
-		return usuario;
+		return new User(usuario.getLogin(), usuario.getPassword(), usuario.isEnabled(), usuario.isAccountNonExpired(),
+				usuario.isCredentialsNonExpired(), usuario.isAccountNonLocked(), usuario.getAuthorities());
 	}
 
 }

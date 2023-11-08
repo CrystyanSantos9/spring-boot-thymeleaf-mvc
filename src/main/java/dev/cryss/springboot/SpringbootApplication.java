@@ -14,7 +14,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @SpringBootApplication
 @EntityScan("dev.cryss.springboot.model")
 @ComponentScan("dev.cryss.*")
-//@ComponentScan("dev.cryss.security.*")
+@ComponentScan("dev.cryss.security.*")
 @EnableJpaRepositories("dev.cryss.springboot.repository")
 @EnableTransactionManagement
 public class SpringbootApplication {
